@@ -251,7 +251,6 @@ while running:
         newmob()
         if player.shield <= 0:
             running = False
-            #foot
 
     # Draw / render
     screen.fill(black)
