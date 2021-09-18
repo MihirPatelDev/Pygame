@@ -164,8 +164,7 @@ class Explosion(pygame.sprite.Sprite):
         self.rect.center = center
         self.frame = 0
         self.last_update = pygame.time.get_ticks()
-        self.frame_rate = 50
-        self.speedy = -10
+        self.frame_rate = 75
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -195,6 +194,7 @@ for img in meteor_list:
 explosion_anim = {}
 explosion_anim['lg'] = []
 explosion_anim['sm'] = []
+explosion_anim['player'] = []
 for i in range(9):
     filename = 'regularExplosion0{}.png'.format(i)
     img = pygame.image.load(path.join(img_dir, filename)).convert()
@@ -203,6 +203,9 @@ for i in range(9):
     explosion_anim['lg'].append(img_lg)
     img_sm = pygame.transform.scale(img, (32, 32))
     explosion_anim['sm'].append(img_sm)
+    filename = 'sonicExplosion0{}.png'.format(i)
+    img = pygame.image.load(path.join(img_dir, filename)).convert()
+    explosion_anim['player'].append(img)
 
 # Load all game sound
 shoot_sound = pygame.mixer.Sound(path.join(snd_dir, 'sfx_laser1.ogg'))
@@ -251,6 +254,8 @@ while running:
         player.shield -= hit.radius * 2
         newmob()
         if player.shield <= 0:
+            death_explosion = Explosion(player.rect.center, 'player')
+            all_sprites.add(death_explosion)
             running = False
 
     # Draw / render
